@@ -25,19 +25,26 @@ def main():
                         matrix_name.strip()
                         form_time = 0.0
                         p2p_time  = 0.0
-                        mpi_time  = 0.0
-                        mpix_time = 0.0
+                        mpi_make_time  = 0.0
+                        mpi_comm_time  = 0.0
+                        mpix_make_time = 0.0
+                        mpix_comm_time = 0.0
                         for line in matrix.split("\n"):
                             if "form: " in line:
                                 form_time += float(line.rstrip().split(": ")[1])
                             elif "Standard comm:" in line:
                                 p2p_time += float(line.rstrip().split(": ")[1])
-                            elif "Standard graph" in line or "Standard neighbor: " in line:
-                                mpi_time += float(line.rstrip().split(": ")[1])
-                            elif "advance" in line:
-                                mpix_time += float(line.rstrip().split(": ")[1])
+                            elif "Standard graph" in line:
+                                mpi_make_time += float(line.rstrip().split(": ")[1])
+                            elif "Standard neighbor: " in line:
+                                mpi_comm_time += float(line.rstrip().split(": ")[1])
+                            elif "advance graph" in line:
+                                mpix_make_time += float(line.rstrip().split(": ")[1])
+                            elif "advance neighbor:" in line:
+                                mpix_comm_time += float(line.rstrip().split(": ")[1])
 
-                        print(machine,nodes,matrix_name,MPI,experiment,p2p_time,mpi_time,mpix_time,sep=",")
+                        print(machine,nodes,matrix_name,MPI,experiment,p2p_time,mpi_make_time,mpi_comm_time,
+                                mpix_make_time,mpix_comm_time,sep=",")
                     print(print_string, end="")
 
 
